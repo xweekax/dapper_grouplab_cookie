@@ -1,0 +1,41 @@
+﻿@model Question
+<style>
+    p.groove {
+        border-style: groove;
+    }
+</style>
+<a href="/QandA/Index">Back to Questions</a>
+<h1>@Model.Title</h1>
+<h6><i>@Model.Posted</i> by: @Model.Username</h6>
+<br />
+<p class="groove">@Model.Detail</p>
+<br />
+@if (Model.Username == ViewBag.activeUser)
+{
+    <button onclick="location.href='/QandA/Edit?_id=@Model.id'">EDIT</button>
+    <button onclick="location.href='/QandA/Delete?_id=@Model.id'">DELETE</button>
+}
+<br />
+<br />
+@if (ViewBag.Answerlist.Count > 0)
+{
+    <h4>Answers</h4>
+    foreach (Answer answer in ViewBag.Answerlist)
+    {
+        <p><i>@answer.Posted - by: @answer.Username </i>
+           @if (answer.Username == ViewBag.activeUser)
+           {
+            <a href="/QandA/GetAnswer?_id=@answer.id">EDIT ANSWER</a>
+           }
+           else
+           { <i style="color:gray">EDIT ANSWER </i> }
+        </p>
+        <p class="groove">@answer.Detail</p>
+    }
+}
+<br />
+@if (@Model.Status != 1 )
+{
+<button onclick="location.href='/QandA/AddAnswer?_id=@Model.id'">Add an Answer</button>
+<button onclick="location.href='/QandA/Close?_id=@Model.id&status=1'">Mark as Resolved</button>
+}

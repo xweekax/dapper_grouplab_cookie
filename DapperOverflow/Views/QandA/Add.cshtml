@@ -1,0 +1,29 @@
+﻿<h6 style="color:red">@ViewBag.Message</h6>
+<a href="/QandA/Index">Back to Questions</a>
+<form action="/QandA/Add" method="post">
+    <fieldset>
+        <legend>Add Question</legend>
+        <!--
+        <p>
+            <label><b>Username</b></label><br />
+            <input type="text"
+                   name="username" />
+        </p>-->
+        <h3>@ViewBag.activeUser</h3>
+        <p>
+            <label><b>Title</b></label><br />
+            <input type="text"
+                   name="title" />
+        </p>
+        <p>
+            <label><b>Description</b></label><br />
+            <textarea name="detail"
+                      rows="20"
+                      cols="150">
+                </textarea>
+        </p>
+        <br><br>       
+        <input type="hidden" name="username" value="@ViewBag.activeUser" />
+        <input type="submit" value="Submit">
+    </fieldset>
+</form>

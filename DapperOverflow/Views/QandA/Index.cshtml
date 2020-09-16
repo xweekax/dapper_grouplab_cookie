@@ -1,0 +1,55 @@
+﻿@model List<Question>
+
+<h1>Questions</h1>
+<br /><br />
+      <form method="post" action="/QandA/Search">
+          <label for="title"><b>Search:</b></label>
+          <input type="text" name="search">
+          <input type="submit" value="Search">
+      </form>
+      <h6><a href="/QandA/Index">Clear Search</a></h6>
+    <br />
+    <a href="/QandA/Add"><b>ADD A QUESTION</b></a>
+    <br />
+    <b>@ViewBag.Searchresult</b>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+    <table>
+        <tr>
+            <th style="width:200px">Date</th>
+            <th style="width:600px">Question</th>
+            <th style="width:100px">User</th>
+            <th style="width:140px"></th>
+        </tr>
+        @foreach (Question question in Model)
+        {
+            int status = question.Status;
+            string message = "";
+            switch (status)
+            {
+                case 0:
+                    message = "OPEN";
+                    break;
+                case 1:
+                    message = "CLOSED";
+                    break;
+            }
+
+            <tr>
+                <th>@question.Posted</th>
+                <th>@message - <a href="/QandA/Detail?_id=@question.id">@question.Title</a></th>
+                <th>@question.Username</th>
+                <th>
+                    @ViewBag.activeUser
+                    @if (question.Username == ViewBag.activeUser)
+                    {
+                        <a href="/QandA/Edit?_id=@question.id"><b>EDIT </b></a> <b>/</b> <a href = "/QandA/Delete?_id=@question.id" ><b> DELETE </b></a>
+                    }
+                </th>
+            </tr>
+        }
+    </table>
+
